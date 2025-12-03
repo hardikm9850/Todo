@@ -11,6 +11,8 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "ToDo List"
+        view.backgroundColor = .yellow
         // Do any additional setup after loading the view.
     }
 

@@ -7,13 +7,16 @@
 
 import UIKit
 
-@main
+@main // Tells compiler to start the app from this class [<application android:name=".MyApplication">]
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        // Configure libraries (Firebase, analytics, etc.)
+        // Set initial states
+        // Do app-wide setup
         return true
     }
 
