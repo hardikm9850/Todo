@@ -1,7 +1,6 @@
 # Simple ToDo App (iOS)
 
 A simple iOS To-Do application built using **UIKit** and **MVC architecture**.
-Users can add tasks using an alert with a **UIDatePicker**, and the tasks are listed in a **UITableView**.
 
 ---
 
