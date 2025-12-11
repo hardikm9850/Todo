@@ -45,7 +45,7 @@ A simple iOS To-Do application built using **UIKit** and **MVC architecture**.
 
 ## Pending / To-Do
 
-* [ ] Add “completed” checkbox
+* [x] Add “completed” checkbox
 * [ ] Add unit tests
 * [ ] Add editing support
 * [ ] Add search/filter
