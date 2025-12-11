@@ -6,17 +6,38 @@
 //
 
 import UIKit
+import SwiftData
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-
+    var container: ModelContainer!
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let _ = (scene as? UIWindowScene) else { return }
+        
+        let config = ModelConfiguration(isStoredInMemoryOnly: false)
+                container = try! ModelContainer(for: Todo.self, configurations: config)
+
+                guard let windowScene = (scene as? UIWindowScene) else { return }
+                
+                let window = UIWindow(windowScene: windowScene)
+
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                let rootVC = storyboard.instantiateInitialViewController()!
+
+                // Inject context into root vc
+                if let nav = rootVC as? UINavigationController,
+                   let todoVC = nav.viewControllers.first as? ToDoTableViewController {
+                    todoVC.context = container.mainContext
+                }
+
+                self.window = window
+                window.rootViewController = rootVC
+                window.makeKeyAndVisible()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
