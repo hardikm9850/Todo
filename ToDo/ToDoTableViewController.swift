@@ -9,23 +9,30 @@
 import UIKit
 import SwiftData
 
+/*
+ UITableViewController is a specialized view controller that:
 
+ already contains a UITableView
+ automatically acts as its delegate + dataSource
+ */
 class ToDoTableViewController: UITableViewController {
 
+    /*
+     A UITableView is iOS’s equivalent of Android’s RecyclerView.
+     It shows a vertical list of rows and reuses a small number of cells to keep memory low.
+     It’s like using an Activity that already has a RecyclerView built-in
+     */
     @IBOutlet weak var todoTableView: UITableView!
     var context: ModelContext!
-    //var items = ["Buy Groceries", "Listen Podcast", "Study iOS", "Study DSA"]
     var items: [Todo] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchTodos()
-        print("DEBUG: ToDoTableViewController Loaded")
         self.title = "To-Do List"
         
-        //tableView.register(UITableViewCell.self, forCellReuseIdentifier: "todoCell")
         navigationItem.title = "To-Do List"
-        //navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTodo))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTodo))
         
     }
     
@@ -55,18 +62,27 @@ class ToDoTableViewController: UITableViewController {
 }
 
 extension ToDoTableViewController {
-    
+    // How many sections?
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-
+    // How many rows in each section?
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return items.count
     }
-
+    // Gimme a cell for this row
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "todoCell", for: indexPath)
-        cell.textLabel?.text = items[indexPath.row].title
+        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "todoCell")
+        let todo = items[indexPath.row]
+
+        cell.textLabel?.text = todo.title
+
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd MMM yyyy, hh:mm a"
+        cell.detailTextLabel?.text = formatter.string(from: todo.date)
+
+        
+        
         return cell
     }
     

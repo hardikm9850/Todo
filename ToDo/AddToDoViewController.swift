@@ -10,6 +10,9 @@ import UIKit
 class AddTodoViewController: UIViewController {
     
     var onSave: ((String, Date) -> Void)? // Closure to pass data back
+    let datePicker = UIDatePicker()
+
+    
     
     let textField: UITextField = {
         let tf = UITextField()
@@ -24,6 +27,22 @@ class AddTodoViewController: UIViewController {
         navigationItem.title = "Add Todo"
         setupTextField()
         setupSaveButton()
+        setupDatePicker()
+    }
+    
+    func setupDatePicker() {
+        datePicker.datePickerMode = .dateAndTime
+        datePicker.preferredDatePickerStyle = .wheels
+        
+        view.addSubview(datePicker)
+
+        datePicker.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            datePicker.topAnchor.constraint(equalTo: textField.bottomAnchor, constant: 20),
+            datePicker.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            datePicker.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
+        ])
+
     }
     
     func setupTextField() {
@@ -42,8 +61,8 @@ class AddTodoViewController: UIViewController {
     
     @objc func saveTodo() {
         guard let text = textField.text, !text.isEmpty else { return }
-        let now = Date()
-        onSave?(text,now) // Pass data back
+        let selectedDate = datePicker.date
+        onSave?(text, selectedDate)
         dismiss(animated: true)
     }
 }
